@@ -18,7 +18,7 @@ export const SearchBox: FunctionComponent = () => {
   return (
     <div>
       <input
-        value={state.value}
+        defaultValue={state.value}
         onChange={(e) => controller.updateText(e.target.value)}
         onKeyDown={(e) => isEnterKey(e) && controller.submit()}
       />
