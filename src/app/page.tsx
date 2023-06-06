@@ -5,6 +5,7 @@ import {
   SearchEngine,
 } from "@coveo/headless";
 import SearchPage from "./components/search-page";
+import { SearchBox } from "./components/search-box.fn";
 
 export const getEngine = async (): Promise<SearchEngine> => {
   const engine = buildSearchEngine({
@@ -27,7 +28,12 @@ export default async function Home() {
       <h1>Hello world!</h1>
       <SearchPage
         state={engine.state}
-        children={<ResultList engine={engine}></ResultList>}
+        children={
+          <>
+            <SearchBox></SearchBox>
+            <ResultList></ResultList>
+          </>
+        }
       ></SearchPage>
     </main>
   );

@@ -1,19 +1,29 @@
+"use client";
+
 import { SearchEngine, buildResultList } from "@coveo/headless";
-import { FunctionComponent, Suspense } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { ResultLink } from "./result-link";
+import { AppContext } from "../client/context/engine";
 
 interface ResultListProps {
   engine: SearchEngine;
 }
 
-export const ResultList: FunctionComponent<ResultListProps> = ({ engine }) => {
-  const controller = buildResultList(engine);
-  const results = controller.state.results;
+export const ResultList: FunctionComponent<ResultListProps> = () => {
+  const { engine } = useContext(AppContext);
+  const controller = buildResultList(engine!);
+  const [state, setState] = useState(controller.state);
+
+  useEffect(() => controller.subscribe(() => setState(controller.state)), []);
+
+  if (!state.results.length) {
+    return <div>No results</div>;
+  }
 
   return (
     <div>
       <ul style={{ textAlign: "left" }}>
-        {results?.map((result) => (
+        {state.results?.map((result) => (
           <li key={result.uniqueId}>
             <article>
               <h3>

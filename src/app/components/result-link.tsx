@@ -1,6 +1,6 @@
 "use client";
 
-import { buildInteractiveResult, Result, SearchEngine } from "@coveo/headless";
+import { buildInteractiveResult, Result } from "@coveo/headless";
 import {
   FunctionComponent,
   PropsWithChildren,
@@ -10,7 +10,6 @@ import {
 import { AppContext } from "../client/context/engine";
 
 interface LinkProps extends PropsWithChildren {
-  state: any;
   result: Result;
 }
 
