@@ -1,25 +1,7 @@
 import { ResultList } from "@/app/components/result-list.fn";
-import {
-  buildSearchEngine,
-  getSampleSearchEngineConfiguration,
-  SearchEngine,
-} from "@coveo/headless";
 import SearchPage from "./components/search-page";
 import { SearchBox } from "./components/search-box.fn";
-
-const getEngine = async (): Promise<SearchEngine> => {
-  const engine = buildSearchEngine({
-    configuration: getSampleSearchEngineConfiguration(),
-  });
-  engine.executeFirstSearch();
-  return new Promise<SearchEngine>((resolve) => {
-    engine.subscribe(() => {
-      if (engine.state.search.searchResponseId) {
-        resolve(engine);
-      }
-    });
-  });
-};
+import { getEngine } from "./server/getServerEngine";
 
 export default async function Home() {
   const engine = await getEngine();
