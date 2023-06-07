@@ -1,27 +1,26 @@
 "use client";
 
 import {
+  SearchEngine,
   buildSearchEngine,
   getSampleSearchEngineConfiguration,
 } from "@coveo/headless";
 import { AppContext } from "../client/context/engine";
-import { useMemo } from "react";
+
+const getEngine = (): SearchEngine => {
+  const engine = buildSearchEngine({
+    configuration: getSampleSearchEngineConfiguration(),
+  });
+  engine.executeFirstSearch();
+  return engine;
+};
 
 export default function SearchPage({
-  state,
   children,
 }: {
-  state: any;
   children: React.ReactNode;
 }) {
-  const engine = useMemo(
-    () =>
-      buildSearchEngine({
-        configuration: getSampleSearchEngineConfiguration(),
-        preloadedState: state,
-      }),
-    undefined
-  );
+  const engine = getEngine();
   return (
     <AppContext.Provider value={{ engine }}>{children}</AppContext.Provider>
   );
