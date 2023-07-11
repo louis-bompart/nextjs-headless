@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const cookieName = "myawesomecookie";
   let hadCookie = request.cookies.has(cookieName);
+  
   if (hadCookie) {
     let cookie = request.cookies.get(cookieName);
     console.log(cookie); // => { name: 'nextjs', value: 'fast', Path: '/' }
@@ -12,7 +13,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Setting cookies on the response using the `ResponseCookies` API
-  const response = NextResponse.rewrite(new URL("/", request.url))
+  const response = NextResponse.rewrite(new URL("/", request.url), {request})
   if (!hadCookie) {
     response.cookies.set(cookieName, "potato");
   }
